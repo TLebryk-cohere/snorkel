@@ -1,3 +1,4 @@
+import copy
 from typing import Optional
 
 from snorkel.map import BaseMapper, LambdaMapper, Mapper, lambda_mapper
@@ -88,7 +89,7 @@ class preprocessor(lambda_mapper):
                 return self._cache[x_hashable]
         # Dangerous; avoids pickling but copy() 
         # isn't perfect in avoiding mutation on original object.
-        x_mapped = x.copy()
+        x_mapped = copy.deepcopy(x)
         # x_mapped = pickle.loads(pickle.dumps(x))
         for mapper in self._pre:
             x_mapped = mapper(x_mapped)
