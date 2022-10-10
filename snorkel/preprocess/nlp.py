@@ -93,7 +93,7 @@ class SpacyPreprocessor(Preprocessor):
 
 EN_CORE_SCI_MD = "en_core_sci_md"
 
-class MedSpacyPreprocessor(SpacyPreprocessor):
+class MedSpacyPreprocessor(Preprocessor):
     """Preprocessor that parses input text via a SpaCy model.
 
     A common approach to writing LFs over text is to first use
