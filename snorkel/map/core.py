@@ -130,6 +130,7 @@ class BaseMapper:
     def _generate_mapped_data_point(self, x: DataPoint) -> Optional[DataPoint]:
         raise NotImplementedError
 
+
     def __call__(self, x: DataPoint) -> Optional[DataPoint]:
         """Run mapping function on input data point.
 
@@ -154,10 +155,10 @@ class BaseMapper:
             x_hashable = self._memoize_key(x)
             if x_hashable in self._cache:
                 return self._cache[x_hashable]
-        # NB: using pickle roundtrip as a more robust deepcopy
-        # As an example, calling deepcopy on a pd.Series or SimpleNamespace
-        # with a dictionary attribute won't create a copy of the dictionary
-        x_mapped = pickle.loads(pickle.dumps(x))
+        # Dangerous; avoids pickling but copy() 
+        # isn't perfect in avoiding mutation on original object.
+        x_mapped = copy.deepcopy(x)
+        # x_mapped = pickle.loads(pickle.dumps(x))
         for mapper in self._pre:
             x_mapped = mapper(x_mapped)
         x_mapped = self._generate_mapped_data_point(x_mapped)
