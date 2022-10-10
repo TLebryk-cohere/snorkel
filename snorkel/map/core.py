@@ -3,6 +3,7 @@ import pickle
 from collections.abc import Hashable
 from types import SimpleNamespace
 from typing import Any, Callable, Dict, List, Mapping, Optional
+import copy
 
 import numpy as np
 import pandas as pd
